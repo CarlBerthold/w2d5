@@ -3,8 +3,9 @@ class Game {
 	constructor() {
 		// this.background = new Background();
 		// this.player = new Player();
-		this.backgrounImages = [];
+		this.backgroundImages = [];
 		this.playerImage = null;
+		this.obstacles = [];
 	}
 
 	setup() {
@@ -21,6 +22,7 @@ class Game {
 			{ src: loadImage('../assets/background/plx-5.png'), x: 0, speed: 4 },
 		];
 		this.playerImage = loadImage('../assets/player/bb8.gif');
+		this.coinImage = loadImage('../assets/coins/tile000.png');
 	}
 
 	draw() {
@@ -30,5 +32,24 @@ class Game {
 		this.background.draw();
 		// this draws the player
 		this.player.draw();
+		// this will add coins to the obstacles array
+		if (frameCount % 120 === 0) {
+			this.obstacles.push(new Obstacle(this.coinImage));
+			console.log(this.obstacles);
+		}
+		// we need to iterate over the obstacles array now and call for every object 
+		// inside the draw function
+		this.obstacles.forEach(function (obstacle) {
+			obstacle.draw();
+		})
+		this.obstacles = this.obstacles.filter((obstacle) => {
+			// console.log(this);
+			// if we have a collision or the obstacle moves out of the screen 
+			if (obstacle.collision(this.player) || (obstacle.x + obstacle.width) < 0) {
+				return false
+			} else {
+				return true
+			}
+		})
 	}
 }

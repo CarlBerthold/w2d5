@@ -1,6 +1,7 @@
 class Player {
 
 	constructor() {
+		this.score = 0;
 		this.gravity = 0.2;
 		this.velocity = 0;
 		this.width = 100;
@@ -25,6 +26,6 @@ class Player {
 
 	jump() {
 		console.log('jump', this.velocity);
-		this.velocity = - 10;
+		this.velocity = - 12;
 	}
 }
